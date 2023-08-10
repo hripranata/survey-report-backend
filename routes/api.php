@@ -30,5 +30,5 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('loadings', LoadingController::class);
     Route::get('loadings/filter/{month}', [LoadingController::class, 'filter']);
     Route::apiResource('bunkers', BunkerController::class)->middleware('role:admin');
-    // Route::get('lodetails/{tongkang}', [BunkerController::class, 'listlodetail']);
+    Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);
 });

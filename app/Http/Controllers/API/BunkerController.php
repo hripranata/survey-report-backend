@@ -174,15 +174,15 @@ class BunkerController extends BaseController
         return $this->sendResponse([], 'Data deleted successfully.');
     }
 
-    // public function listlodetail($tongkang) {
-    //     // $loDetails = LoDetail::whereNull('bunker_id')->get();
-    //     $loDetails = DB::table('loadings')
-    //                     ->join('lo_details', 'loadings.id', '=', 'lo_details.loading_id')
-    //                     ->select('lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
-    //                     ->where('loadings.tongkang', '=', $tongkang)
-    //                     ->get();
+    public function listlodetail($tongkang) {
+        $loDetails = DB::table('lo_details')
+                        ->join('loadings', 'lo_details.loading_id', '=', 'loadings.id')
+                        ->select('lo_details.id', 'lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
+                        ->where('lo_details.bunker_id', '=', null)
+                        ->where('loadings.lo_date', '=', $tongkang)
+                        ->get();
 
 
-    //     return $this->sendResponse(LoDetailResource::collection($loDetails), 'Data retrieved successfully.');
-    // }
+        return $this->sendResponse(LoDetailResource::collection($loDetails), 'Data retrieved successfully.');
+    }
 }
