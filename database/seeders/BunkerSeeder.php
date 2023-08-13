@@ -16,8 +16,8 @@ class BunkerSeeder extends Seeder
     {
         DB::table('bunkers')->insert([
             'user_id' => 1,
-            'tongkang' => 'SPOB Kujang Jaya 1',
-            'kri' => 'KRI Dewakembar 932',
+            'tongkang_id' => 1,
+            'kri_id' => 2,
             'bbm' => 'HSD',
             'bunker_location' => 'JICT 2',
             'start' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -25,6 +25,8 @@ class BunkerSeeder extends Seeder
             'vol_lo' => 10000,
             'vol_ar' => 9990,
             'surveyor' => 'Hari Pranata',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 }

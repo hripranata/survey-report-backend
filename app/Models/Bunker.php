@@ -13,7 +13,7 @@ class Bunker extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id','tongkang', 'kri', 'bunker_location', 'bbm', 'start', 'stop', 'vol_lo', 'vol_ar', 'surveyor'
+        'user_id','tongkang_id', 'kri_id', 'bunker_location', 'bbm', 'start', 'stop', 'vol_lo', 'vol_ar', 'surveyor'
     ];
 
     protected $dates = ['deleted_at'];
@@ -26,5 +26,15 @@ class Bunker extends Model
     public function lo_details(): HasMany
     {
         return $this->hasMany(LoDetail::class);
+    }
+
+    public function tongkang(): BelongsTo
+    {
+        return $this->belongsTo(Tongkang::class);
+    }
+
+    public function kri(): BelongsTo
+    {
+        return $this->belongsTo(Kri::class);
     }
 }

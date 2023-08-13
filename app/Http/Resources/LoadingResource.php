@@ -25,7 +25,8 @@ class LoadingResource extends JsonResource
             'vol_lo' => $this->vol_lo,
             'vol_al' => $this->vol_al,
             'surveyor' => $this-> surveyor,
-            'lo_number' => LoDetailResource::collection($this->lo_details),
+            'tongkang' => new TongkangResource($this->tongkang),
+            'lo_details' => LoDetailResource::collection($this->lo_details),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

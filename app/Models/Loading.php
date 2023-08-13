@@ -13,7 +13,7 @@ class Loading extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'lo_date', 'tongkang', 'bbm', 'start', 'stop', 'vol_lo', 'vol_al', 'surveyor'
+        'user_id', 'lo_date', 'tongkang_id', 'bbm', 'start', 'stop', 'vol_lo', 'vol_al', 'surveyor'
     ];
 
     protected $dates = ['deleted_at'];
@@ -22,9 +22,15 @@ class Loading extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function tongkang(): BelongsTo
+    {
+        return $this->belongsTo(Tongkang::class);
+    }
 
     public function lo_details(): HasMany
     {
         return $this->hasMany(LoDetail::class);
     }
+
 }

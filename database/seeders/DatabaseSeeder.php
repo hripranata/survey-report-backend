@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Kri;
+use App\Models\Tongkang;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
+            TongkangSeeder::class,
+            KriSeeder::class,
             LoadingSeeder::class,
             BunkerSeeder::class,
+            LoDetailSeeder::class,
         ]);
     }
 }

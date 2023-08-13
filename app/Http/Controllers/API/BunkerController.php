@@ -29,15 +29,15 @@ class BunkerController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tongkang' => 'required',
-            'kri' => 'required',
+            'tongkang_id' => 'required',
+            'kri_id' => 'required',
             'bunker_location' => 'required',
             'bbm' => 'required',
             'start' => 'required',
             'stop' => 'required',
             'vol_lo' => 'required',
             'vol_ar' => 'required',
-            'lo_number' => 'nullable',
+            'lo_details' => 'nullable',
         ]);
 
         if($validator->fails()){
@@ -48,8 +48,8 @@ class BunkerController extends BaseController
         try {
             $bunker = Bunker::create([
                 'user_id' => Auth::user()->id,
-                'tongkang' => $request->tongkang,
-                'kri' => $request->kri,
+                'tongkang_id' => $request->tongkang_id,
+                'kri_id' => $request->kri_id,
                 'bunker_location' => $request->bunker_location,
                 'bbm' => $request->bbm,
                 'start' => $request->start,
@@ -59,8 +59,8 @@ class BunkerController extends BaseController
                 'surveyor' =>  Auth::user()->name,
             ]);
     
-            if (count($request->lo_number) > 0) {
-                $los = $request->lo_number;
+            if (count($request->lo_details) > 0) {
+                $los = $request->lo_details;
                 foreach( $los as $lo){
                     LoDetail::where('id', $lo['id'])->update(
                         [
@@ -100,15 +100,15 @@ class BunkerController extends BaseController
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'tongkang' => 'required',
-            'kri' => 'required',
+            'tongkang_id' => 'required',
+            'kri_id' => 'required',
             'bunker_location' => 'required',
             'bbm' => 'required',
             'start' => 'required',
             'stop' => 'required',
             'vol_lo' => 'required',
             'vol_ar' => 'required',
-            'lo_number' => 'nullable',
+            'lo_details' => 'nullable',
         ]);
 
         if($validator->fails()){
@@ -118,8 +118,8 @@ class BunkerController extends BaseController
         DB::beginTransaction();
         try {
             Bunker::where('id', $id)->update([
-                'tongkang' => $request->tongkang,
-                'kri' => $request->kri,
+                'tongkang_id' => $request->tongkang_id,
+                'kri_id' => $request->kri_id,
                 'bunker_location' => $request->bunker_location,
                 'bbm' => $request->bbm,
                 'start' => $request->start,
@@ -128,14 +128,14 @@ class BunkerController extends BaseController
                 'vol_ar' => $request->vol_ar,
             ]);
     
-            if (count($request->lo_number) > 0) {
+            if (count($request->lo_details) > 0) {
                 LoDetail::where('bunker_id', $id)->update(
                     [
                         'bunker_id' => null,
                     ]
                 );
     
-                $los = $request->lo_number;
+                $los = $request->lo_details;
                 foreach( $los as $lo){
                     LoDetail::where('id', $lo['id'])->update(
                         [
@@ -174,14 +174,14 @@ class BunkerController extends BaseController
         return $this->sendResponse([], 'Data deleted successfully.');
     }
 
-    public function listlodetail($tongkang) {
+    public function listlodetail($tongkang_id) {
         $loDetails = DB::table('lo_details')
                         ->join('loadings', 'lo_details.loading_id', '=', 'loadings.id')
+                        ->join('tongkangs', 'tongkangs.id', '=', 'loadings.tongkang_id')
                         ->select('lo_details.id', 'lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
                         ->where('lo_details.bunker_id', '=', null)
-                        ->where('loadings.lo_date', '=', $tongkang)
+                        ->where('tongkangs.id', '=', $tongkang_id)
                         ->get();
-
 
         return $this->sendResponse(LoDetailResource::collection($loDetails), 'Data retrieved successfully.');
     }

@@ -17,8 +17,8 @@ class BunkerResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'tongkang' => $this->tongkang,
-            'kri' => $this->kri,
+            'tongkang' => new TongkangResource($this->tongkang),
+            'kri' => new KriResource($this->kri),
             'bunker_location' => $this->bunker_location,
             'bbm' => $this->bbm,
             'start' => $this->start,
@@ -26,7 +26,7 @@ class BunkerResource extends JsonResource
             'vol_lo' => $this->vol_lo,
             'vol_ar' => $this->vol_ar,
             'surveyor' => $this-> surveyor,
-            'lo_number' => LoDetailResource::collection($this->lo_details),
+            'lo_details' => LoDetailResource::collection($this->lo_details),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

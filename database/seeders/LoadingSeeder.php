@@ -17,25 +17,29 @@ class LoadingSeeder extends Seeder
         DB::table('loadings')->insert([
             'user_id' => 1,
             'lo_date' => Carbon::now()->toDateString(),
-            'tongkang' => 'SPOB Kujang Jaya 1',
+            'tongkang_id' => 2,
             'bbm' => 'HSD',
             'start' => Carbon::now()->format('Y-m-d H:i:s'),
             'stop' => Carbon::now()->format('Y-m-d H:i:s'),
             'vol_lo' => 10000,
             'vol_al' => 9990,
             'surveyor' => 'Bayu Hariyanto',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
         DB::table('loadings')->insert([
             'user_id' => 2,
             'lo_date' => Carbon::now()->toDateString(),
-            'tongkang' => 'SPOB Kanaya Indah 99',
+            'tongkang_id' => 1,
             'bbm' => 'HSD',
             'start' => Carbon::now()->format('Y-m-d H:i:s'),
             'stop' => Carbon::now()->format('Y-m-d H:i:s'),
             'vol_lo' => 50000,
             'vol_al' => 49985,
             'surveyor' => 'Hari Pranata',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 }

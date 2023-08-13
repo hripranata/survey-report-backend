@@ -18,7 +18,7 @@ class LoadingController extends BaseController
      */
     public function index()
     {
-        $loadings = Loading::with('lo_details')->get();
+        $loadings = Loading::all();
         return $this->sendResponse(LoadingResource::collection($loadings), 'Data retrieved successfully.');
     }
 
@@ -29,13 +29,13 @@ class LoadingController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'lo_date' => 'required',
-            'tongkang' => 'required',
+            'tongkang_id' => 'required',
             'bbm' => 'required',
             'start' => 'required',
             'stop' => 'required',
             'vol_lo' => 'required',
             'vol_al' => 'required',
-            'lo_number' => 'required',
+            'lo_details' => 'required',
         ]);
 
         if($validator->fails()){
@@ -47,7 +47,7 @@ class LoadingController extends BaseController
             $loading = Loading::create([
                 'user_id' => Auth::user()->id,
                 'lo_date' => $request->lo_date,
-                'tongkang' => $request->tongkang,
+                'tongkang_id' => $request->tongkang_id,
                 'bbm' => $request->bbm,
                 'start' => $request->start,
                 'stop' => $request->stop,
@@ -56,7 +56,7 @@ class LoadingController extends BaseController
                 'surveyor' =>  Auth::user()->name,
             ]);
     
-            $los = $request->lo_number;
+            $los = $request->lo_details;
             foreach( $los as $lo){
                 LoDetail::create(
                     [
@@ -91,6 +91,9 @@ class LoadingController extends BaseController
         return $this->sendResponse(new LoadingResource($loading), 'Data retrieved successfully.');
     }
 
+    /**
+     * Display the specified resource by filter.
+     */
     public function filter($month)
     {
         $loading = Loading::whereMonth('lo_date', $month)->get();
@@ -110,13 +113,13 @@ class LoadingController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'lo_date' => 'required',
-            'tongkang' => 'required',
+            'tongkang_id' => 'required',
             'bbm' => 'required',
             'start' => 'required',
             'stop' => 'required',
             'vol_lo' => 'required',
             'vol_al' => 'required',
-            'lo_number' => 'required',
+            'lo_details' => 'required',
         ]);
 
         if($validator->fails()){
@@ -128,7 +131,7 @@ class LoadingController extends BaseController
             Loading::where('id', $id)->update(
                 [
                     'lo_date' => $request->lo_date,
-                    'tongkang' => $request->tongkang,
+                    'tongkang_id' => $request->tongkang_id,
                     'bbm' => $request->bbm,
                     'start' => $request->start,
                     'stop' => $request->stop,
@@ -137,7 +140,7 @@ class LoadingController extends BaseController
                 ]
             );
     
-            $los = $request->lo_number;
+            $los = $request->lo_details;
             foreach( $los as $lo){
                 LoDetail::where('loading_id', $id)->where('id', $lo['id'])->update(
                     [
@@ -150,7 +153,7 @@ class LoadingController extends BaseController
 
             DB::commit();
     
-            $updated_data = Loading::with('lo_details')->find($id);
+            $updated_data = Loading::find($id);
     
             return $this->sendResponse(new LoadingResource($updated_data), 'Data updated successfully.');
 
