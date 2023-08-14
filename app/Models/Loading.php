@@ -25,7 +25,7 @@ class Loading extends Model
     
     public function tongkang(): BelongsTo
     {
-        return $this->belongsTo(Tongkang::class);
+        return $this->belongsTo(Vessel::class, 'tongkang_id');
     }
 
     public function lo_details(): HasMany

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TongkangResource extends JsonResource
+class VesselResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class TongkangResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'tongkang_name' => $this->tongkang_name,
+            'vessel_name' => $this->vessel_name,
+            'vessel_type' => $this->vessel_type,
         ];
     }
 }

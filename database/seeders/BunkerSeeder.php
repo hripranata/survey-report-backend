@@ -17,7 +17,7 @@ class BunkerSeeder extends Seeder
         DB::table('bunkers')->insert([
             'user_id' => 1,
             'tongkang_id' => 1,
-            'kri_id' => 2,
+            'kri_id' => 3,
             'bbm' => 'HSD',
             'bunker_location' => 'JICT 2',
             'start' => Carbon::now()->format('Y-m-d H:i:s'),

@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('bunkers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('kri_id')->constrained('kris')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('tongkang_id')->constrained('tongkangs')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('tongkang_id');
+            $table->foreign('tongkang_id')->references('id')->on('vessels')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('kri_id');
+            $table->foreign('kri_id')->references('id')->on('vessels')->onUpdate('cascade')->onDelete('cascade');
             $table->string('bunker_location');
             $table->string('bbm');
             $table->timestamp('start', $precision = 0);

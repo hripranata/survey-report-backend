@@ -23,18 +23,19 @@ class Bunker extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tongkang(): BelongsTo
+    {
+        return $this->belongsTo(Vessel::class, 'tongkang_id');
+    }
+    public function kri(): BelongsTo
+    {
+        return $this->belongsTo(Vessel::class, 'kri_id');
+    }
+
     public function lo_details(): HasMany
     {
         return $this->hasMany(LoDetail::class);
     }
 
-    public function tongkang(): BelongsTo
-    {
-        return $this->belongsTo(Tongkang::class);
-    }
 
-    public function kri(): BelongsTo
-    {
-        return $this->belongsTo(Kri::class);
-    }
 }

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('loadings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('tongkang_id')->constrained('tongkangs')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('tongkang_id');
+            $table->foreign('tongkang_id')->references('id')->on('vessels')->onUpdate('cascade')->onDelete('cascade');
             $table->date('lo_date');
             $table->string('bbm');
             $table->timestamp('start', $precision = 0);

@@ -177,10 +177,10 @@ class BunkerController extends BaseController
     public function listlodetail($tongkang_id) {
         $loDetails = DB::table('lo_details')
                         ->join('loadings', 'lo_details.loading_id', '=', 'loadings.id')
-                        ->join('tongkangs', 'tongkangs.id', '=', 'loadings.tongkang_id')
+                        ->join('vessels', 'vessels.id', '=', 'loadings.tongkang_id')
                         ->select('lo_details.id', 'lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
                         ->where('lo_details.bunker_id', '=', null)
-                        ->where('tongkangs.id', '=', $tongkang_id)
+                        ->where('vessels.id', '=', $tongkang_id)
                         ->get();
 
         return $this->sendResponse(LoDetailResource::collection($loDetails), 'Data retrieved successfully.');

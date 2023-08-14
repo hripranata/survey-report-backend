@@ -17,8 +17,8 @@ class BunkerResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'tongkang' => new TongkangResource($this->tongkang),
-            'kri' => new KriResource($this->kri),
+            'tongkang' => new VesselResource($this->tongkang),
+            'kri' => new VesselResource($this->kri),
             'bunker_location' => $this->bunker_location,
             'bbm' => $this->bbm,
             'start' => $this->start,
