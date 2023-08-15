@@ -8,9 +8,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\LoadingResource;
-use App\Http\Resources\VesselResource;
 use App\Models\LoDetail;
-use App\Models\Vessel;
 use Illuminate\Support\Facades\DB;
 
 class LoadingController extends BaseController
@@ -22,8 +20,6 @@ class LoadingController extends BaseController
     {
         $loadings = Loading::all();
         return $this->sendResponse(LoadingResource::collection($loadings), 'Data retrieved successfully.');
-        // $vessels= Vessel::first();
-        // return $this->sendResponse(new VesselResource($vessels), 'Data retrieved successfully.');
     }
 
     /**

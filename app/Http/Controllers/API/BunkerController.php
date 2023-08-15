@@ -93,6 +93,20 @@ class BunkerController extends BaseController
    
         return $this->sendResponse(new BunkerResource($bunker), 'Data retrieved successfully.');
     }
+    
+    /**
+     * Display the specified resource by filter.
+     */
+    public function filter($month)
+    {
+        $bunker = Bunker::whereMonth('stop', $month)->get();
+  
+        if (is_null($bunker)) {
+            return $this->sendError('Data not found.');
+        }
+   
+        return $this->sendResponse(BunkerResource::collection($bunker), 'Data retrieved successfully.');
+    }
 
     /**
      * Update the specified resource in storage.

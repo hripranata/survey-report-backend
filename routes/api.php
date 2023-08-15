@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LoadingController;
 use App\Http\Controllers\API\BunkerController;
+use App\Http\Controllers\API\VesselController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('loadings', LoadingController::class);
     Route::get('loadings/filter/{month}', [LoadingController::class, 'filter']);
     Route::apiResource('bunkers', BunkerController::class)->middleware('role:admin');
+    Route::get('bunkers/filter/{month}', [BunkerController::class, 'filter']);
     Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);
+    Route::get('vessels/{type}', [VesselController::class, 'vessels']);
 });
