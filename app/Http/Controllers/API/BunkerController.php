@@ -192,11 +192,27 @@ class BunkerController extends BaseController
         $loDetails = DB::table('lo_details')
                         ->join('loadings', 'lo_details.loading_id', '=', 'loadings.id')
                         ->join('vessels', 'vessels.id', '=', 'loadings.tongkang_id')
-                        ->select('lo_details.id', 'lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
+                        ->select('lo_details.id', 'lo_details.bunker_id', 'lo_details.lo_number', 'lo_details.product', 'lo_details.qty')
                         ->where('lo_details.bunker_id', '=', null)
                         ->where('vessels.id', '=', $tongkang_id)
+                        ->where('lo_details.deleted_at', '=', null)
                         ->get();
 
         return $this->sendResponse(LoDetailResource::collection($loDetails), 'Data retrieved successfully.');
+    }
+
+    public function bunker_counter($month)
+    {
+        $bunkers = DB::table('bunkers')
+                    ->selectRaw('count(id) as total_bunker, sum(vol_ar) as total_ar')
+                    ->whereMonth('start', $month)
+                    ->where('deleted_at', null)
+                    ->first();
+  
+        if (is_null($bunkers)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse($bunkers, 'Data retrieved successfully.');
     }
 }

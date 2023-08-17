@@ -174,4 +174,27 @@ class LoadingController extends BaseController
 
         return $this->sendResponse([], 'Data deleted successfully.');
     }
+
+    public function loading_counter($month)
+    {
+        // $loadings = DB::table('loadings')
+        //             ->join('lo_details', 'lo_details.loading_id', '=', 'loadings.id')
+        //             ->join('bunkers', 'bunkers.id', '=', 'lo_details.bunker_id')
+        //             ->selectRaw('count(loadings.id) as total_loading, sum(loadings.vol_lo) as total_lo, count(bunkers.id) as total_bunker, sum(bunkers.vol_ar) as total_ar')
+        //             ->whereMonth('loadings.lo_date', $month)
+        //             ->where('loadings.deleted_at', null)
+        //             ->where('bunkers.deleted_at', null)
+        //             ->first();
+        $loadings = DB::table('loadings')
+                    ->selectRaw('count(id) as total_loading, sum(vol_lo) as total_lo')
+                    ->whereMonth('loadings.lo_date', $month)
+                    ->where('deleted_at', null)
+                    ->first();
+  
+        if (is_null($loadings)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse($loadings, 'Data retrieved successfully.');
+    }
 }

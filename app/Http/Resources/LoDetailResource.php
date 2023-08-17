@@ -16,6 +16,7 @@ class LoDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'bunker_id' => $this->bunker_id,
             'lo_number' => $this->lo_number,
             'product' => $this->product,
             'qty' => $this->qty,

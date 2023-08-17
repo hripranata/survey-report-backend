@@ -7,6 +7,7 @@ use App\Http\Controllers\API\LoadingController;
 use App\Http\Controllers\API\BunkerController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VesselController;
+use PHPUnit\Event\TestSuite\Loaded;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,6 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::get('bunkers/filter/{month}', [BunkerController::class, 'filter']);
     Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);
     Route::get('vessels/{type}', [VesselController::class, 'vessels']);
+    Route::get('loadings/count/{month}', [LoadingController::class, 'loading_counter']);
+    Route::get('bunkers/count/{month}', [BunkerController::class, 'bunker_counter']);
 });
