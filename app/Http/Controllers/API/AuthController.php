@@ -49,7 +49,7 @@ class AuthController extends BaseController
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required',
         ]);
 
@@ -57,7 +57,7 @@ class AuthController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());       
         }
    
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('nik', $request->username)->first();
         
         if (!$user || !Hash::check($request->password, $user->password)) {
             return $this->sendError('These credentials do not match our records.', ['error'=>'Unauthorised']);
@@ -66,9 +66,13 @@ class AuthController extends BaseController
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $data = [
+            'id' => $user->id,
             'name' => $user->name,
+            'nik' => $user->nik,
             'email' => $user->email,
             'role' => $user->role,
+            'phone' => $user->phone,
+            'address' => $user->address,
         ];
         
         $response = [

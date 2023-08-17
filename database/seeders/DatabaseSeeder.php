@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             VesselSeeder::class,
-            LoadingSeeder::class,
-            BunkerSeeder::class,
-            LoDetailSeeder::class,
+            // LoadingSeeder::class,
+            // BunkerSeeder::class,
+            // LoDetailSeeder::class,
         ]);
     }
 }
