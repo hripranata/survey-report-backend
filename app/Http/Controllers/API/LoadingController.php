@@ -94,9 +94,9 @@ class LoadingController extends BaseController
     /**
      * Display the specified resource by filter.
      */
-    public function filter($month)
+    public function filter($month, $year)
     {
-        $loading = Loading::whereMonth('lo_date', $month)->get();
+        $loading = Loading::whereYear('lo_date', $year)->whereMonth('lo_date', $month)->get();
   
         if (is_null($loading)) {
             return $this->sendError('Data not found.');
@@ -197,4 +197,5 @@ class LoadingController extends BaseController
 
         return $this->sendResponse($loadings, 'Data retrieved successfully.');
     }
+
 }

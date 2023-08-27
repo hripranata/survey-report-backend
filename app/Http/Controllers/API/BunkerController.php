@@ -97,9 +97,9 @@ class BunkerController extends BaseController
     /**
      * Display the specified resource by filter.
      */
-    public function filter($month)
+    public function filter($month, $year)
     {
-        $bunker = Bunker::whereMonth('stop', $month)->get();
+        $bunker = Bunker::whereYear('stop', $year)->whereMonth('stop', $month)->get();
   
         if (is_null($bunker)) {
             return $this->sendError('Data not found.');
