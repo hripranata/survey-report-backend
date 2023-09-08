@@ -38,6 +38,9 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('loadings', LoadingController::class);
     Route::get('loadings/filter/{month}/{year}', [LoadingController::class, 'filter']);
+    Route::get('loadings/filterbydate/{start}/{end}', [LoadingController::class, 'filterByDate']);
+    Route::get('loadings/filterbyuser/{user_id}/{start}/{end}', [LoadingController::class, 'filterByIdDate']);
+
     Route::apiResource('bunkers', BunkerController::class);
     Route::get('bunkers/filter/{month}/{year}', [BunkerController::class, 'filter']);
     Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);

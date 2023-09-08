@@ -96,13 +96,36 @@ class LoadingController extends BaseController
      */
     public function filter($month, $year)
     {
-        $loading = Loading::whereYear('lo_date', $year)->whereMonth('lo_date', $month)->get();
+        $loadings = Loading::whereYear('lo_date', $year)->whereMonth('lo_date', $month)->paginate(2);
   
-        if (is_null($loading)) {
+        if (is_null($loadings)) {
             return $this->sendError('Data not found.');
         }
-   
-        return $this->sendResponse(LoadingResource::collection($loading), 'Data retrieved successfully.');
+
+        // return $this->sendResponse(LoadingResource::collection($loadings), 'Data retrieved successfully.');
+        return LoadingResource::collection($loadings);
+    }
+    public function filterByDate($start, $end)
+    {
+        $loadings = Loading::whereBetween('lo_date', [$start, $end])->get();
+  
+        if (is_null($loadings)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse(LoadingResource::collection($loadings), 'Data retrieved successfully.');
+        // return LoadingResource::collection($loadings);
+    }
+    public function filterByIdDate($user_id, $start, $end)
+    {
+        $loadings = Loading::where('user_id', $user_id)->whereBetween('lo_date', [$start, $end])->get();
+  
+        if (is_null($loadings)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse(LoadingResource::collection($loadings), 'Data retrieved successfully.');
+        // return LoadingResource::collection($loadings);
     }
 
 
