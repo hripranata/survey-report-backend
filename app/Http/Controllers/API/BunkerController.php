@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LoDetail;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class BunkerController extends BaseController
 {
@@ -99,13 +100,37 @@ class BunkerController extends BaseController
      */
     public function filter($month, $year)
     {
-        $bunker = Bunker::whereYear('stop', $year)->whereMonth('stop', $month)->get();
+        $bunkers = Bunker::whereYear('stop', $year)->whereMonth('stop', $month)->get();
   
-        if (is_null($bunker)) {
+        if (is_null($bunkers)) {
             return $this->sendError('Data not found.');
         }
    
-        return $this->sendResponse(BunkerResource::collection($bunker), 'Data retrieved successfully.');
+        return $this->sendResponse(BunkerResource::collection($bunkers), 'Data retrieved successfully.');
+    }
+    public function filterByDate($start, $end)
+    {
+        // $startDate = Carbon::createFromFormat('Y-m-d', $start)->startOfDay();
+        // $endDate = Carbon::createFromFormat('Y-m-d', $end)->endOfDay();
+        // $bunkers = Bunker::whereBetween('stop', [$startDate, $endDate])->get();
+        $bunkers = Bunker::whereBetween(DB::raw('DATE(stop)'), [$start, $end])->orderBy('stop', 'desc')->get();
+  
+        if (is_null($bunkers)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse(BunkerResource::collection($bunkers), 'Data retrieved successfully.');
+    }
+    public function filterByIdDate($user_id, $start, $end)
+    {
+        // $bunkers = Bunker::where('user_id', $user_id)->whereBetween('stop', [$start, $end])->get();
+        $bunkers = Bunker::where('user_id', $user_id)->whereBetween(DB::raw('DATE(stop)'), [$start, $end])->orderBy('stop', 'desc')->get();
+  
+        if (is_null($bunkers)) {
+            return $this->sendError('Data not found.');
+        }
+
+        return $this->sendResponse(BunkerResource::collection($bunkers), 'Data retrieved successfully.');
     }
 
     /**

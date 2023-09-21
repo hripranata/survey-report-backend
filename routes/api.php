@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::delete('vessels/{id}', [VesselController::class, 'destroy']);
     });
     Route::apiResource('users', UserController::class);
+    
     Route::apiResource('loadings', LoadingController::class);
     Route::get('loadings/filter/{month}/{year}', [LoadingController::class, 'filter']);
     Route::get('loadings/filterbydate/{start}/{end}', [LoadingController::class, 'filterByDate']);
@@ -43,10 +44,14 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::apiResource('bunkers', BunkerController::class);
     Route::get('bunkers/filter/{month}/{year}', [BunkerController::class, 'filter']);
+    Route::get('bunkers/filterbydate/{start}/{end}', [BunkerController::class, 'filterByDate']);
+    Route::get('bunkers/filterbyuser/{user_id}/{start}/{end}', [BunkerController::class, 'filterByIdDate']);
+
     Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);
     Route::get('vessels/{type}', [VesselController::class, 'vessels']);
     Route::get('loadings/count/{month}', [LoadingController::class, 'loading_counter']);
     Route::get('bunkers/count/{month}', [BunkerController::class, 'bunker_counter']);
-    Route::get('exports/loadings/{month}/{year}', [ExportController::class, 'export_loading']);
-    Route::get('exports/bunkers/{month}/{year}', [ExportController::class, 'export_bunker']);
+
+    Route::get('exports/loadings/{start}/{end}', [ExportController::class, 'export_loading']);
+    Route::get('exports/bunkers/{start}/{end}', [ExportController::class, 'export_bunker']);
 });

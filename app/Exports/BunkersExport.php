@@ -7,20 +7,21 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;    
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Illuminate\Support\Facades\DB;
 
 class BunkersExport implements FromCollection,WithHeadings,WithMapping
 {
     use Exportable;
-    protected $month;
-    protected $year;
-    public function __construct($month, $year)
+    protected $start;
+    protected $end;
+    public function __construct($start, $end)
     {
-        $this->month = $month;
-        $this->year = $year;
+        $this->start = $start;
+        $this->end = $end;
     }
     public function collection()
     {
-        return Bunker::with('tongkang')->whereYear('bunkers.stop', $this->year)->whereMonth('bunkers.stop', $this->month)->get();
+        return Bunker::with('tongkang')->whereBetween(DB::raw('DATE(stop)'), [$this->start, $this->end])->orderBy('stop', 'asc')->get();
     }
 
     public function map($data): array

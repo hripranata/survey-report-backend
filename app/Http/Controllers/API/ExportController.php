@@ -9,12 +9,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends BaseController
 {
-    public function export_loading($month, $year) 
+    public function export_loading($start, $end) 
     {
-        return Excel::download(new LoadingsExport($month, $year), 'loadings.xlsx');
+        return Excel::download(new LoadingsExport($start, $end), 'loadings.xlsx');
     }
-    public function export_bunker($month, $year) 
+    public function export_bunker($start, $end) 
     {
-        return Excel::download(new BunkersExport($month, $year), 'bunkers.xlsx');
+        return Excel::download(new BunkersExport($start, $end), 'bunkers.xlsx');
     }
 }

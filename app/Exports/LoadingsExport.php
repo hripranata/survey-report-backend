@@ -12,17 +12,17 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 class LoadingsExport implements FromCollection,WithHeadings,WithMapping
 {
     use Exportable;
-    protected $month;
-    protected $year;
-    public function __construct($month, $year)
+    protected $start;
+    protected $end;
+    public function __construct($start, $end)
     {
-        $this->month = $month;
-        $this->year = $year;
+        $this->start = $start;
+        $this->end = $end;
     }
 
     public function collection()
     {
-        return Loading::with('tongkang')->whereYear('loadings.lo_date', $this->year)->whereMonth('loadings.lo_date', $this->month)->get();
+        return Loading::with('tongkang')->whereBetween('lo_date', [$this->start, $this->end])->orderBy('stop', 'asc')->get();
     }
 
     public function map($data): array
