@@ -8,6 +8,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends BaseController
 {
@@ -42,7 +43,6 @@ class UserController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        error_log($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'nik' => 'required',
@@ -72,5 +72,30 @@ class UserController extends BaseController
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nik' => 'required',
+            'password' => 'required',
+            'npassword' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $user = User::where('nik', $request->nik)->first();
+        
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return $this->sendError('These credentials do not match our records.', ['error'=>'Unauthorised']);
+        }
+        
+        $updated_data = $user->update([
+            'password' => $request->npassword,
+        ]);
+   
+        return $this->sendResponse($updated_data, 'Password updated successfully.');
     }
 }
