@@ -28,9 +28,9 @@ use PHPUnit\Event\TestSuite\Loaded;
 Route::controller(AuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
-    Route::post('reset_password_token', 'resetPassword');
     Route::post('forgot_password', 'sendPasswordResetToken');
-    Route::post('new_password', 'setNewAccountPassword');
+    Route::post('reset_password', 'validatePasswordResetToken');
+    Route::post('validate_token', 'tokenValidation');
 });
         
 Route::middleware('auth:sanctum')->group( function () {
