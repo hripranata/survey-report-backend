@@ -35,8 +35,7 @@ Route::controller(AuthController::class)->group(function(){
         
 Route::middleware('auth:sanctum')->group( function () {
     Route::middleware('role:admin')->group( function () {
-        Route::put('vessels/{id}', [VesselController::class, 'update']);
-        Route::delete('vessels/{id}', [VesselController::class, 'destroy']);
+        Route::apiResource('vessels', VesselController::class);
     });
     Route::apiResource('users', UserController::class);
     Route::post('users/update_password', [UserController::class, 'updatePassword']);
@@ -52,7 +51,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::get('bunkers/filterbyuser/{user_id}/{start}/{end}', [BunkerController::class, 'filterByIdDate']);
 
     Route::get('lodetails/filter/{tongkang}', [BunkerController::class, 'listlodetail']);
-    Route::get('vessels/{type}', [VesselController::class, 'vessels']);
+    Route::get('vessels/filter/{type}', [VesselController::class, 'filter']);
     Route::get('loadings/count/{month}', [LoadingController::class, 'loading_counter']);
     Route::get('bunkers/count/{month}', [BunkerController::class, 'bunker_counter']);
 
