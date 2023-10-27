@@ -96,7 +96,7 @@ class LoadingController extends BaseController
      */
     public function filter($month, $year)
     {
-        $loadings = Loading::whereYear('lo_date', $year)->whereMonth('lo_date', $month)->get();
+        $loadings = Loading::whereYear('lo_date', $year)->whereMonth('lo_date', $month)->orderBy('stop', 'desc')->get();
   
         if (is_null($loadings)) {
             return $this->sendError('Data not found.');
