@@ -26,7 +26,27 @@ class UserController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'nik' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return $this->sendResponse($user, 'Data insert successfully.');
     }
 
     /**
@@ -69,9 +89,10 @@ class UserController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        User::where('id', $id)->delete();
+        return $this->sendResponse([], 'Data deleted successfully.');
     }
 
     public function updatePassword(Request $request)

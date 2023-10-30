@@ -36,8 +36,13 @@ Route::controller(AuthController::class)->group(function(){
 Route::middleware('auth:sanctum')->group( function () {
     Route::middleware('role:admin')->group( function () {
         Route::apiResource('vessels', VesselController::class);
+        Route::apiResource('users', UserController::class)->only([
+            'store', 'destroy'
+        ]);
     });
-    Route::apiResource('users', UserController::class);
+    Route::apiResource('users', UserController::class)->except([
+        'store', 'destroy'
+    ]);
     Route::post('users/update_password', [UserController::class, 'updatePassword']);
     
     Route::apiResource('loadings', LoadingController::class);
