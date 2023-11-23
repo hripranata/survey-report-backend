@@ -31,6 +31,7 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('forgot_password', 'sendPasswordResetToken');
     Route::post('reset_password', 'validatePasswordResetToken');
     Route::post('validate_token', 'tokenValidation');
+    Route::get('/test', 'connectionTest');
 });
         
 Route::middleware('auth:sanctum')->group( function () {

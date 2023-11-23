@@ -15,6 +15,11 @@ use Illuminate\Support\Str;
 
 class AuthController extends BaseController
 {
+    public function connectionTest() 
+    {
+        return $this->sendResponse([], 'Connection test successfully.');
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
