@@ -17,7 +17,14 @@ class AuthController extends BaseController
 {
     public function connectionTest() 
     {
-        return $this->sendResponse([], 'Connection test successfully.');
+        try {
+            DB::connection()->getPdo();
+            // echo "Connected successfully to: " . DB::connection()->getDatabaseName();
+            return $this->sendResponse([], 'Connection test successfully.');
+        } catch (\Exception $e) {
+            // die("Could not connect to the database. Please check your configuration. error:" . $e );
+            return $this->sendError('Could not connect to the database.', ['error'=>'Connection error.']);
+        }
     }
 
     public function register(Request $request)
